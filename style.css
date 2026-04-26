@@ -1,0 +1,26 @@
+.tab-btn.active {
+    border-bottom: 2px solid #2563eb;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+
+.card-open {
+    border-top: 5px solid #10b981 !important; 
+}
+
+.card-closed {
+     border-top: 5px solid #8b5cf6 !important; 
+
+}
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+
+.fa, .fas {
+    margin-right: 4px;
+}
