@@ -220,3 +220,27 @@ const issuesData = [
         createdAt: "2/22/2026" 
     },
 ];
+
+const loginPage = document.getElementById('login-page');
+const mainPage = document.getElementById('main-page');
+const issueContainer = document.getElementById('issue-container');
+const loginBtn = document.getElementById('login-btn');
+const searchInput = document.getElementById('search-input');
+const issueCountEl = document.getElementById('issue-count');
+const modal = document.getElementById('issue-modal');
+const modalContent = document.getElementById('modal-content');
+const closeModalBtn = document.getElementById('close-modal');
+
+loginBtn.addEventListener('click', () => {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    if (user === 'admin' && pass === 'admin123') {
+        loginPage.classList.add('hidden');
+        mainPage.classList.remove('hidden');
+        renderIssues(issuesData);
+    } else {
+        alert('Wrong! (Hint: admin / admin123)');
+    }
+});
+
