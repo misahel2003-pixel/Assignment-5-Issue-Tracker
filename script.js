@@ -297,3 +297,60 @@ function renderIssues(data) {
 }
 
 
+function showModal(issue) {
+   
+    modalContent.innerHTML = `
+        <div class="space-y-6">
+            <div class="border-b border-gray-100 pb-5">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">${issue.title}</h2>
+                <div class="flex items-center gap-3 text-sm text-gray-500">
+                    <span class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase ${issue.status === 'open' ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'}">
+                        ${issue.status === 'open' ? 'Opened' : 'Closed'}
+                    </span>
+                    <i class="fas fa-circle text-[5px]"></i>
+                    <span>Opened by <strong>${issue.author}</strong></span>
+                    <i class="fas fa-circle text-[5px]"></i>
+                    <span>${issue.createdAt}</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5">
+                ${issue.labels.map(label => {
+                    let labelColor = 'bg-green-50 text-green-600 border border-green-100'; 
+                    if(label.name.toUpperCase() === 'BUG') labelColor = 'bg-red-50 text-red-600 border border-red-100';
+                    if(label.name.toUpperCase() === 'HELP WANTED') labelColor = 'bg-yellow-50 text-yellow-600 border border-yellow-100';
+                    
+                    return `<span class="flex items-center justify-center gap-1.5 ${labelColor} px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <i class="fas fa-tag text-xs"></i> ${label.name}
+                            </span>`;
+                }).join('')}
+            </div>
+            
+            <p class="text-gray-600 leading-relaxed text-base border-b border-gray-100 pb-6">${issue.description}</p>
+            
+            <div class="grid grid-cols-2 gap-6 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <div>
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1.5">Assignee:</p>
+                    <p class="font-bold text-gray-900 text-base">${issue.author}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1.5">Priority:</p>
+                    <span class="px-4 py-1.5 rounded-full text-xs font-extrabold tracking-widest uppercase ${issue.priority === 'HIGH' ? 'bg-red-50 text-red-700' : issue.priority === 'MEDIUM' ? 'bg-yellow-50 text-yellow-700' : 'bg-gray-100 text-gray-700'}">
+                        ${issue.priority}
+                    </span>
+                </div>
+                
+            </div>
+
+            <div class="flex justify-end pt-5 border-t border-gray-100">
+                <button id="modal-close-btn" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    `;
+
+    
+    document.getElementById('modal-close-btn').onclick = () => modal.classList.add('hidden');
+    modal.classList.remove('hidden');
+}
