@@ -249,7 +249,7 @@ function renderIssues(data) {
     if(!issueContainer) return;
     issueContainer.innerHTML = '';
     if(issueCountEl) {
-        issueCountEl.innerText = `${data.length}`;
+        issueCountEl.innerText = `${data.length} Issues`;
     }
     
     data.forEach(issue => {
