@@ -371,3 +371,14 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         renderIssues(filtered);
     });
 });
+
+if(searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = issuesData.filter(i => 
+            i.title.toLowerCase().includes(term) || 
+            i.description.toLowerCase().includes(term)
+        );
+        renderIssues(filtered);
+    });
+}
