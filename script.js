@@ -244,3 +244,56 @@ loginBtn.addEventListener('click', () => {
     }
 });
 
+
+function renderIssues(data) {
+    if(!issueContainer) return;
+    issueContainer.innerHTML = '';
+    if(issueCountEl) issueCountEl.innerText = '20 Issues';
+    
+    data.forEach(issue => {
+        const card = document.createElement('div');
+        const statusClass = issue.status === 'open' ? 'card-open' : 'card-closed';
+        
+        
+        const statusImg = issue.status === 'open' ? './assets/Open-Status.png' : './assets/Closed- Status .png';
+        
+        card.className = `bg-white p-6 shadow-md rounded-xl cursor-pointer transition transform hover:scale-105 border border-gray-100 ${statusClass}`;
+        
+        const priorityColor = issue.priority === 'HIGH' ? 'bg-red-100 text-red-700' : 
+                             issue.priority === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700';
+
+        const labelsHtml = issue.labels.map(label => {
+            let labelClass = 'bg-gray-100 text-gray-700'; 
+            if(label.type === 'bug') labelClass = 'bg-red-50 text-red-600 border border-red-100';
+            if(label.type === 'help') labelClass = 'bg-yellow-50 text-yellow-600 border border-yellow-100';
+            if(label.type === 'enhancement') labelClass = 'bg-green-50 text-green-600 border border-green-100';
+
+            
+            return `<span class="flex items-center justify-center gap-1 ${labelClass} px-2 py-0.5 rounded-full text-[10px] font-bold tracking-tight uppercase">
+                         ${label.name}
+                    </span>`;
+        }).join('');
+
+        card.innerHTML = `
+            <div class="flex justify-between items-start mb-3">
+                <div class="w-8 h-8">
+                    <img src="${statusImg}" alt="status" class="w-full h-full object-contain">
+                </div>
+                <span class="${priorityColor} px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">${issue.priority}</span>
+            </div>
+            <h3 class="font-bold text-gray-800 text-base leading-tight mb-2">${issue.title}</h3>
+            <p class="text-gray-500 text-xs mb-4 line-clamp-2">${issue.description}</p>
+            <div class="flex flex-wrap gap-2 mb-4">${labelsHtml}</div>
+            <hr class="border-gray-50 mb-4">
+            <div class="flex flex-col gap-1 text-[11px] text-gray-400">
+                <span>#${issue.number} by <span class="text-gray-600 font-semibold">${issue.author}</span></span>
+                <span>${issue.createdAt}</span>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => showModal(issue));
+        issueContainer.appendChild(card);
+    });
+}
+
+
