@@ -248,7 +248,9 @@ loginBtn.addEventListener('click', () => {
 function renderIssues(data) {
     if(!issueContainer) return;
     issueContainer.innerHTML = '';
-    if(issueCountEl) issueCountEl.innerText = '20 Issues';
+    if(issueCountEl) {
+        issueCountEl.innerText = `${data.length}`;
+    }
     
     data.forEach(issue => {
         const card = document.createElement('div');
