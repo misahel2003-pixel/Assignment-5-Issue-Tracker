@@ -354,3 +354,20 @@ function showModal(issue) {
     document.getElementById('modal-close-btn').onclick = () => modal.classList.add('hidden');
     modal.classList.remove('hidden');
 }
+
+if(closeModalBtn) {
+    closeModalBtn.onclick = () => modal.classList.add('hidden');
+}
+window.onclick = (e) => { if(e.target === modal) modal.classList.add('hidden'); };
+
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'border-blue-600', 'text-blue-600'));
+        e.target.classList.add('active', 'border-blue-600', 'text-blue-600');
+
+        const tab = e.target.getAttribute('data-tab');
+        const filtered = tab === 'all' ? issuesData : issuesData.filter(i => i.status === tab);
+        renderIssues(filtered);
+    });
+});
