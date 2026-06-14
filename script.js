@@ -24,8 +24,8 @@ const issuesData = [
     { 
         id: 3, 
         number: 3, 
-        title: "Fix Navigation Menu On Mobile Devices", 
-        description: "The navigation menu doesn't collapse properly on mobile devices.Need to fix the responsive behavior", 
+        title: "Fix broken image uploads", 
+        description: "Users are unable to upload images larger than 5MB.Need to increase the file size limit or add compression", 
         status: "open", 
         author: "john_doe", 
         priority: "HIGH", 
@@ -57,8 +57,8 @@ const issuesData = [
     { 
         id: 6, 
         number: 6, 
-        title: "Fix Navigation Menu On Mobile Devices", 
-        description: "The navigation menu doesn't collapse properly on mobile devices.Need to fix the responsive behavior", 
+        title: "Add user authentication system", 
+        description: "Implement JWT-based authentication with login,registration,and password reset functionality", 
         status: "closed", 
         author: "john_doe", 
         priority: "LOW", 
@@ -101,8 +101,8 @@ const issuesData = [
     { 
         id: 10, 
         number: 10, 
-       title: "Fix Navigation Menu On Mobile Devices", 
-        description: "The navigation menu doesn't collapse properly on mobile devices.Need to fix the responsive behavior",  
+       title: "Performance issues with large datasets", 
+        description: "Application becomes slow when loading more than 1000 items.Need to implement pagination or virtual scrolling.",  
         status: "open", 
         author: "john_doe", 
         priority: "HIGH", 
@@ -134,8 +134,8 @@ const issuesData = [
     { 
         id: 13, 
         number: 13, 
-        title: "Fix Navigation Menu On Mobile Devices", 
-        description: "The navigation menu doesn't collapse properly on mobile devices.Need to fix the responsive behavior", 
+        title: "Add dark mode support", 
+        description: "Users are requesting a dark mode option.This would improve accessibility and user experience", 
         status: "closed", 
         author: "john_doe", 
         priority: "LOW", 
@@ -156,8 +156,8 @@ const issuesData = [
     { 
         id: 15, 
         number: 15, 
-        title: "Fix Navigation Menu On Mobile Devices", 
-        description: "The navigation menu doesn't collapse properly on mobile devices.Need to fix the responsive behavior", 
+        title: "Update README with installation  instructions", 
+        description: "The README file needs better installations for new contributions", 
         status: "closed", 
         author: "john_doe", 
         priority: "LOW", 
@@ -222,6 +222,7 @@ const issuesData = [
 ];
 
 const loginPage = document.getElementById('login-page');
+const loader = document.getElementById('loader');
 const mainPage = document.getElementById('main-page');
 const issueContainer = document.getElementById('issue-container');
 const loginBtn = document.getElementById('login-btn');
@@ -370,7 +371,18 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
         const tab = e.target.getAttribute('data-tab');
         const filtered = tab === 'all' ? issuesData : issuesData.filter(i => i.status === tab);
-        renderIssues(filtered);
+        
+        const loader = document.getElementById('loader');
+        if(issueContainer) issueContainer.innerHTML = '';
+        if(loader) loader.classList.remove('hidden');
+
+        setTimeout(() => {
+            if(loader){
+                loader.classList.remove('hidden');
+                loader.style.display = 'none';
+            } 
+            renderIssues(filtered);
+        }, 1000);
     });
 });
 
